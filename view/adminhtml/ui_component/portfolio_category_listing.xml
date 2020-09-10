@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <!-- Define data provider name and spinner name and SOME button -->
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">portfolio_category_listing.portfolio_category_listing_data_source</item>
+    
+            <item name="deps" xsi:type="string">portfolio_category_listing.portfolio_category_listing_data_source</item>
+            <!-- the format here is uicomponentname.datasourcename -->
+        </item>
+        
+        <!-- Spinner is uicomponentfile Name -->
+        <item name="spinner" xsi:type="string">portfolio_category_listing</item>
+        
+        <!-- ADD new button -->
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Thêm mới</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/add</item>
+            </item>
+        </item>
+    </argument>
+
+    <!-- Declare Data Source details -->
+    <!-- the dataSource name is datasourcename -->
+    <dataSource name="portfolio_category_listing_data_source">
+
+        <!-- this is data source name, this is used at many places -->
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">CategoryGridDataProvider</argument>
+            <!-- Pfay\Contacts\Model\Contact\DataProvider -->
+            <!-- the dataSource name is datasourcename -->
+            <argument name="name" xsi:type="string">portfolio_category_listing_data_source</argument>
+
+            <!-- Put your Database table primary Key -->
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+
+            <!-- It can be user define -->
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+
+            <!-- the field used in ajax url's of grid. just define this as id -->
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+    
+    <listingToolbar name="listing_top">
+        <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters"/>
+         <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <!-- Same as spinner name -->
+    <columns name="portfolio_category_listing">
+        <!-- Adding column to Grid -->
+        <column name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">Tên thể loại</item>
+                </item>
+            </argument>
+        </column> 
+
+
+        <actionsColumn name="actions" class="AHT\Portfolio\Ui\Component\Category\Column\BlockActions">
+            <settings>
+                <indexField>id</indexField>
+            </settings>
+        </actionsColumn>
+
+    </columns>
+</listing>
