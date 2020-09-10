@@ -19,8 +19,20 @@ class UpgradeSchema implements UpgradeSchemaInterface
      * {@inheritdoc}
      */
     public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
-    {
+    {   
         if (version_compare($context->getVersion(), '1.0.4', '<')) {
+            $setup->getConnection()->changeColumn(
+                $setup->getTable('AHT_Images'),
+                'id',
+                'image_id',
+                [
+                    'type' => \Magento\Framework\DB\Ddl\Table::TYPE_INTEGER,
+                    'length' => 255,
+                    'comment' => 'image_id',
+                    'identity' => true
+                ]
+            );
+
             $setup->getConnection()->modifyColumn(
                 $setup->getTable('AHT_Images'),
                 'image_id',
@@ -56,7 +68,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'nullable' => false,
                     'default' => '',
                     'comment' => 'Path_image_2'
-                ],
+                ]
             );
 
             $setup->getConnection()->addColumn(
@@ -68,7 +80,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'nullable' => false,
                     'default' => '',
                     'comment' => 'Path_image_3'
-                ],
+                ]
             );
 
             $setup->getConnection()->addColumn(
@@ -80,13 +92,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'nullable' => false,
                     'default' => '',
                     'comment' => 'Path_image_4'
-                ],
+                ]
             );
-
-           
         }
         
-        $setup->endSetup();
         if (version_compare($context->getVersion(), '1.0.6', '<')) {
             $setup->getConnection()->modifyColumn(
                 $setup->getTable('AHT_Images'),
@@ -97,7 +106,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'nullable' => false,
                     'default' => '',
                     'comment' => 'Path_image_2'
-                ],
+                ]
             );
 
             $setup->getConnection()->modifyColumn(
@@ -109,7 +118,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'nullable' => false,
                     'default' => '',
                     'comment' => 'Path_image_3'
-                ],
+                ]
             );
 
             $setup->getConnection()->modifyColumn(
@@ -121,9 +130,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
                     'nullable' => false,
                     'default' => '',
                     'comment' => 'Path_image_4'
-                ],
+                ]
             );
         }
+        $setup->endSetup();
     }
 
 }
